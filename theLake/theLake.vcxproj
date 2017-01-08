@@ -140,6 +140,7 @@
     <ClCompile Include="DisplayWindow.cpp" />
     <ClCompile Include="Framebuffer.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Quad.cpp" />
     <ClCompile Include="Rotator.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Surface.cpp" />
@@ -147,23 +148,28 @@
   <ItemGroup>
     <ClInclude Include="DisplayWindow.h" />
     <ClInclude Include="Framebuffer.h" />
+    <ClInclude Include="Quad.h" />
     <ClInclude Include="Rotator.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Surface.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="mountain.frag" />
-    <None Include="mountain.vert" />
-    <None Include="mountainref.frag" />
-    <None Include="mountainref.vert" />
-    <None Include="posts.frag" />
-    <None Include="posts.vert" />
-    <None Include="shader.frag" />
-    <None Include="shader.vert" />
-    <None Include="tequila.frag" />
-    <None Include="tequila.vert" />
-    <None Include="water.frag" />
-    <None Include="water.vert" />
+    <None Include="shaders\mountain.frag" />
+    <None Include="shaders\mountain.vert" />
+    <None Include="shaders\mountainref.frag" />
+    <None Include="shaders\mountainref.vert" />
+    <None Include="shaders\posts.frag" />
+    <None Include="shaders\posts.vert" />
+    <None Include="shaders\shader.frag" />
+    <None Include="shaders\shader.geom" />
+    <None Include="shaders\shader.vert" />
+    <None Include="shaders\shader2.frag" />
+    <None Include="shaders\standard.frag" />
+    <None Include="shaders\standard.vert" />
+    <None Include="shaders\tequila.frag" />
+    <None Include="shaders\tequila.vert" />
+    <None Include="shaders\water.frag" />
+    <None Include="shaders\water.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

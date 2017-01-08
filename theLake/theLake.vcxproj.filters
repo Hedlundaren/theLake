@@ -33,6 +33,9 @@
     <ClCompile Include="Framebuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Quad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ShaderProgram.h">
@@ -50,42 +53,57 @@
     <ClInclude Include="Framebuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Quad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader.frag">
+    <None Include="shaders\mountain.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="shader.vert">
+    <None Include="shaders\mountain.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="water.frag">
+    <None Include="shaders\mountainref.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="water.vert">
+    <None Include="shaders\mountainref.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="mountain.frag">
+    <None Include="shaders\posts.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="mountain.vert">
+    <None Include="shaders\posts.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="tequila.frag">
+    <None Include="shaders\shader.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="tequila.vert">
+    <None Include="shaders\shader.geom">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="posts.frag">
+    <None Include="shaders\shader.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="posts.vert">
+    <None Include="shaders\shader2.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="mountainref.frag">
+    <None Include="shaders\standard.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="mountainref.vert">
+    <None Include="shaders\standard.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\tequila.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\tequila.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\water.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\water.vert">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
