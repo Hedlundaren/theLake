@@ -31,18 +31,18 @@ int main() {
 	GLFWwindow* window = nullptr;
 	DisplayWindow myWindow = DisplayWindow(window, WIDTH, HEIGHT);
 
-	ShaderProgram post_program("posts.vert", "", "", "", "posts.frag");
-	ShaderProgram mountain_program("mountain.vert", "", "", "", "mountain.frag");
-	ShaderProgram mountain_mirror_program("mountainref.vert", "", "", "", "mountainref.frag");
-	ShaderProgram water_program("water.vert", "", "", "", "water.frag");
-	ShaderProgram tequila_program("tequila.vert", "", "", "", "tequila.frag");
+	ShaderProgram post_program("shaders/posts.vert", "", "", "", "shaders/posts.frag");
+	ShaderProgram mountain_program("shaders/mountain.vert", "", "", "", "shaders/mountain.frag");
+	ShaderProgram mountain_mirror_program("shaders/mountainref.vert", "", "", "", "shaders/mountainref.frag");
+	ShaderProgram water_program("shaders/water.vert", "", "", "", "shaders/water.frag");
+	ShaderProgram tequila_program("shaders/tequila.vert", "", "", "", "shaders/tequila.frag");
 	glUseProgram(0);
 
 	MouseRotator rotator;
 	rotator.init(window);
 
 	Surface water(4, 4, 250, 500);
-	Surface mountain(30, 60, 200, 400);
+	Surface mountain(100, 200, 200, 400);
 
 
 	GLfloat quadVertices[] = {   // Vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates.
