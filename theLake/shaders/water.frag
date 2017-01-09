@@ -166,7 +166,7 @@ void main()
     vec3 diffuse = kd * clamp( dot( normal, lightDir ), 0.0, 1.0) * diffuse_color;
 
 	// Ambient
-	float ka = 0.1;
+	float ka = 0.0;
 	vec3 ambient = ambient_color * ka;
 
 	// Specular
@@ -191,7 +191,7 @@ void main()
 	vec3 reflection = pow((1.0f - dot(normal, -V)), 2.9) * reflection_color;
 
 
-	vec3 color = phong + height + refraction + reflection;
+	vec3 color = phong + refraction + reflection;
 
 
 	outputF = vec4(color, 1.0);

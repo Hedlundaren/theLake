@@ -1,3 +1,5 @@
+.*
+!/.gitignore
 Debug/
 opengl essentials/
 x64/
