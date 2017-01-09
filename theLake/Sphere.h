@@ -27,17 +27,17 @@ public:
 	void draw();
 
 protected:
-	void make_face(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 face_color);
+	void make_face(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 face_color, glm::vec3 center);
 
 private:
 
 	std::vector<glm::vec3> vertices;
 	std::vector<unsigned int> indices;
+	std::vector<glm::vec3> normals;
 
 	const int res_phi, res_theta;
 	float radius;
-	GLuint sphereVAO, sphereVBO;
-	GLuint IBO;
+	GLuint VAO, VBO, IBO, normalbuffer;
 
 };
 

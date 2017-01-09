@@ -9,7 +9,7 @@ void main()
 {
 
 	float blur = pow( gl_FragCoord.z / gl_FragCoord.w /25.0, 2.0) - 0.5;
-	float offset = 1.0 / 1.0;  
+	float offset = 1.0 /  blur;  
 
     vec2 offsets[9] = vec2[](
         vec2(-offset, offset),  // top-left
@@ -50,5 +50,5 @@ float kernel[9] = float[](
         col += sampleTex[i] * kernel[i];
     
     color = vec4(col, 1.0);
-	//color = vec4(vec3(texture(screenTexture, TexCoords)), 1.0);
+	color = vec4(vec3(texture(screenTexture, TexCoords)), 1.0);
 }  

@@ -30,12 +30,10 @@ glm::mat4 rotationMatrix(glm::vec3 axis, float angle)
 		0.0, 0.0, 0.0, 1.0);
 }
 
-void Sphere::make_face(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 face_color) {
-	glm::vec3 face_normal = normalize(cross(b - a, c - a));
-
-	glm::vec3 normal = face_normal;
-	glm::vec3 in_color = face_color;
-
+void Sphere::make_face(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 face_color, glm::vec3 center) {
+	glm::vec3 normal = glm::normalize(glm::cross(b - a, c - a));
+	//normal = glm::vec3(1.0f, 0.0f, 0.0f);
+	center = glm::vec3(center.x, -center.y, center.z);
 	vertices.push_back(a);
 	vertices.push_back(b);
 	vertices.push_back(c);
@@ -44,28 +42,23 @@ void Sphere::make_face(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 face_col
 	indices.push_back(vertices.size() - 2);
 	indices.push_back(vertices.size() - 1);
 
-	//gl_Position = P * MV * vec4(a, 1.0);
-	//EmitVertex();
+	normal = normalize(a - center);
+	normals.push_back(normal);
+	normal = normalize(b - center);
+	normals.push_back(normal);
+	normal = normalize(c - center);
+	normals.push_back(normal);
 
-	//normal = face_normal;
-	//in_color = face_color;
-	//gl_Position = P * MV * vec4(b, 1.0);
-	//EmitVertex();
-
-	//normal = face_normal;
-	//in_color = face_color;
-	//gl_Position = P * MV * vec4(c, 1.0);
-	//EmitVertex();
 }
 
 void Sphere::create_sphere() {
 
 
 
-	glGenVertexArrays(1, &sphereVAO);
-	glBindVertexArray(sphereVAO);
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
 
-	glm::vec3 center = glm::vec3(0.0f, -10.0f, 0.0f);
+	glm::vec3 center = glm::vec3(0.0f, 0.0f, 0.0f);
 	float phi_stepSize = 2.0 * PI / res_phi;
 	float theta_stepSize = 2.0 / res_theta;
 
@@ -80,7 +73,7 @@ void Sphere::create_sphere() {
 		glm::vec3 a = radius * glm::vec3(a_raw.x, a_raw.y, a_raw.z) - center;
 		glm::vec3 b = radius * glm::vec3(b_raw.x, b_raw.y, b_raw.z) - center;
 
-		make_face(top, b, a, RED);
+		make_face(top, b, a, RED, center);
 	}
 
 	// Middle piece
@@ -102,8 +95,8 @@ void Sphere::create_sphere() {
 			glm::vec3 c = radius * glm::vec3(c_raw.x, c_raw.y, c_raw.z) - center;
 			glm::vec3 d = radius * glm::vec3(d_raw.x, d_raw.y, d_raw.z) - center;
 
-			make_face(a, b, d, RED);
-			make_face(a, d, c, RED);
+			make_face(a, b, d, RED, center);
+			make_face(a, d, c, RED, center);
 		}
 	}
 
@@ -118,13 +111,13 @@ void Sphere::create_sphere() {
 
 		glm::vec3 a = radius * glm::vec3(a_raw.x, a_raw.y, a_raw.z) - center;
 		glm::vec3 b = radius * glm::vec3(b_raw.x, b_raw.y, b_raw.z) - center;
-		make_face(bottom, a, b, RED);
+		make_face(bottom, a, b, RED, center);
 	}
 
 
 	// Model vertices
-	glGenBuffers(1, &sphereVBO);
-	glBindBuffer(GL_ARRAY_BUFFER, sphereVBO);
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float) * 3, &vertices[0], GL_STATIC_DRAW); // Give our vertices to OpenGL.
 	glEnableVertexAttribArray(0); // 1rst attribute buffer : vertices
 	glVertexAttribPointer(
@@ -134,6 +127,20 @@ void Sphere::create_sphere() {
 		GL_FALSE,           // normalized?
 		sizeof(float) * 3,  // stride
 		(void*)0			// array buffer offset
+	);
+
+	// Model normals
+	glGenBuffers(1, &normalbuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
+	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
+	glEnableVertexAttribArray(1); // 3rd attribute buffer : normals
+	glVertexAttribPointer(
+		1,                                // attribute
+		3,                                // size
+		GL_FLOAT,                         // type
+		GL_TRUE,                         // normalized?
+		sizeof(float) * 3,                // stride
+		(void*)0                          // array buffer offset
 	);
 
 	// Model indices
@@ -149,13 +156,18 @@ void Sphere::draw() {
 
 	//Draw Object
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
 
 	// Index buffer
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-	glBindVertexArray(sphereVAO);
+	glBindVertexArray(VAO);
+
+	//Normals
+	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
+	glNormalPointer(GL_FLOAT, sizeof(glm::vec3), (void*)0);
 
 	glDrawElements(
-		GL_LINES,      // mode
+		GL_TRIANGLES,      // mode
 		indices.size(),    // count
 		GL_UNSIGNED_INT,   // type
 		(void*)0           // element array buffer offset

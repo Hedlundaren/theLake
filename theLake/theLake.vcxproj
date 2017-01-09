@@ -168,6 +168,8 @@
     <None Include="shaders\shader2.frag" />
     <None Include="shaders\standard.frag" />
     <None Include="shaders\standard.vert" />
+    <None Include="shaders\sun.frag" />
+    <None Include="shaders\sun.vert" />
     <None Include="shaders\tequila.frag" />
     <None Include="shaders\tequila.vert" />
     <None Include="shaders\water.frag" />

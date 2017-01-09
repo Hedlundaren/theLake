@@ -38,6 +38,7 @@ int main() {
 	ShaderProgram mountain_mirror_program("shaders/mountainref.vert", "", "", "", "shaders/mountainref.frag");
 	ShaderProgram water_program("shaders/water.vert", "", "", "", "shaders/water.frag");
 	ShaderProgram tequila_program("shaders/tequila.vert", "", "", "", "shaders/tequila.frag");
+	ShaderProgram sun_program("shaders/tequila.vert", "", "", "", "shaders/tequila.frag");
 	glUseProgram(0);
 
 	MouseRotator rotator;
@@ -75,6 +76,10 @@ int main() {
 		mountain_program.updateCommonUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
 		mountain.draw(window);
 
+		//sun_program();
+		//sun_program.updateCommonUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
+		//sun.draw();
+
 		// =========================
 		// Reflection render pass 
 		// =========================
@@ -86,6 +91,9 @@ int main() {
 		mountain_mirror_program.updateCommonUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
 		mountain.draw(window);
 
+		sun_program();
+		sun_program.updateMirrorUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
+		sun.draw();
 
 		// =========================
 		// Mountain render pass 
@@ -108,8 +116,8 @@ int main() {
 		preScreenBuffer.bindBuffer();
 		//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-		tequila_program();
-		tequila_program.updateCommonUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
+		sun_program();
+		sun_program.updateCommonUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
 		sun.draw();
 
 		// =========================
