@@ -143,6 +143,7 @@
     <ClCompile Include="Quad.cpp" />
     <ClCompile Include="Rotator.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
+    <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Surface.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,7 @@
     <ClInclude Include="Quad.h" />
     <ClInclude Include="Rotator.h" />
     <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="Surface.h" />
   </ItemGroup>
   <ItemGroup>

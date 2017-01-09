@@ -19,6 +19,7 @@
 
 #include "Surface.h";
 #include "Quad.h";
+#include "Sphere.h";
 #include "Framebuffer.h";
 
 #define HEIGHT 900
@@ -44,7 +45,7 @@ int main() {
 
 	Surface water(4, 4, 250, 500);
 	Surface mountain(100, 200, 200, 400);
-
+	Sphere sun(10, 10, 1.0f);
 	Quad quad;
 
 	double time;
@@ -85,6 +86,7 @@ int main() {
 		mountain_mirror_program.updateCommonUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
 		mountain.draw(window);
 
+
 		// =========================
 		// Mountain render pass 
 		// =========================
@@ -99,6 +101,16 @@ int main() {
 		mountain_program();
 		mountain_program.updateCommonUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
 		mountain.draw(window);
+
+		// =========================
+		// Sun render pass 
+		// =========================
+		preScreenBuffer.bindBuffer();
+		//glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		tequila_program();
+		tequila_program.updateCommonUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
+		sun.draw();
 
 		// =========================
 		// Water render pass 
