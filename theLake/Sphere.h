@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+#include <vector>
 
 #ifdef _WIN32
 #include "GL/glew.h"
@@ -24,11 +26,18 @@ public:
 	void create_sphere();
 	void draw();
 
+protected:
+	void make_face(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 face_color);
 
 private:
+
+	std::vector<glm::vec3> vertices;
+	std::vector<unsigned int> indices;
+
 	const int res_phi, res_theta;
 	float radius;
 	GLuint sphereVAO, sphereVBO;
+	GLuint IBO;
 
 };
 

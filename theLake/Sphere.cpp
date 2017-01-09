@@ -30,12 +30,19 @@ glm::mat4 rotationMatrix(glm::vec3 axis, float angle)
 		0.0, 0.0, 0.0, 1.0);
 }
 
-void make_face(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 face_color) {
+void Sphere::make_face(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 face_color) {
 	glm::vec3 face_normal = normalize(cross(b - a, c - a));
 
 	glm::vec3 normal = face_normal;
 	glm::vec3 in_color = face_color;
 
+	vertices.push_back(a);
+	vertices.push_back(b);
+	vertices.push_back(c);
+
+	indices.push_back(vertices.size() - 3);
+	indices.push_back(vertices.size() - 2);
+	indices.push_back(vertices.size() - 1);
 
 	//gl_Position = P * MV * vec4(a, 1.0);
 	//EmitVertex();
@@ -54,29 +61,11 @@ void make_face(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 face_color) {
 void Sphere::create_sphere() {
 
 
-	GLfloat quadVertices[] = {   // Vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates.
-								 // Positions   // TexCoords
-		-1.0f,  1.0f,  0.0f, 1.0f,
-		-1.0f, -1.0f,  0.0f, 0.0f,
-		1.0f, -1.0f,  1.0f, 0.0f,
-
-		-1.0f,  1.0f,  0.0f, 1.0f,
-		1.0f, -1.0f,  1.0f, 0.0f,
-		1.0f,  1.0f,  1.0f, 1.0f
-	};
 
 	glGenVertexArrays(1, &sphereVAO);
-	glGenBuffers(1, &sphereVBO);
 	glBindVertexArray(sphereVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, sphereVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)(2 * sizeof(GLfloat)));
-	glBindVertexArray(0);
 
-	glm::vec3 center = glm::vec3(0.0f);
+	glm::vec3 center = glm::vec3(0.0f, -10.0f, 0.0f);
 	float phi_stepSize = 2.0 * PI / res_phi;
 	float theta_stepSize = 2.0 / res_theta;
 
@@ -133,13 +122,45 @@ void Sphere::create_sphere() {
 	}
 
 
+	// Model vertices
+	glGenBuffers(1, &sphereVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, sphereVBO);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float) * 3, &vertices[0], GL_STATIC_DRAW); // Give our vertices to OpenGL.
+	glEnableVertexAttribArray(0); // 1rst attribute buffer : vertices
+	glVertexAttribPointer(
+		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+		3,                  // size
+		GL_FLOAT,           // type
+		GL_FALSE,           // normalized?
+		sizeof(float) * 3,  // stride
+		(void*)0			// array buffer offset
+	);
+
+	// Model indices
+	glGenBuffers(1, &IBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+
+
 }
 
 void Sphere::draw() {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_TRIANGLES);
-	glBindBuffer(GL_ARRAY_BUFFER, sphereVBO);
+	glLineWidth(2.0);
+
+	//Draw Object
+	glEnableClientState(GL_VERTEX_ARRAY);
+
+	// Index buffer
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
 	glBindVertexArray(sphereVAO);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	glDrawElements(
+		GL_LINES,      // mode
+		indices.size(),    // count
+		GL_UNSIGNED_INT,   // type
+		(void*)0           // element array buffer offset
+	);
+
 	glBindVertexArray(0);
 
 }
