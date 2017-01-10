@@ -160,7 +160,7 @@ void ShaderProgram::updateCommonUniforms(MouseRotator rotator, float width, floa
 
 	glm::mat4 MV, P;
 	glm::mat4 M = glm::mat4(1.0f);
-	glm::mat4 VRotX = glm::rotate(M, (rotator.phi - time / 50.0f), glm::vec3(0.0f, -1.0f, 0.0f)); //Rotation about y-axis
+	glm::mat4 VRotX = glm::rotate(M, (rotator.phi - time / 100.0f), glm::vec3(0.0f, -1.0f, 0.0f)); //Rotation about y-axis
 	glm::mat4 VRotY = glm::rotate(M, (rotator.theta), glm::vec3(-1.0f, 0.0f, 0.0f)); //Rotation about x-axis
 	glm::vec4 camPos = VRotX * VRotY * glm::vec4(0.0f, 30.0f, 220.0f + rotator.zoom, 1.0f);
 	glm::vec3 scene_center(0.0f, 0.0f, 0.0f);
@@ -193,7 +193,7 @@ void ShaderProgram::updateMirrorUniforms(MouseRotator rotator, float width, floa
 
 	glm::mat4 MV, P;
 	glm::mat4 M = glm::mat4(1.0f);
-	glm::mat4 VRotX = glm::rotate(M, (rotator.phi - time / 50.0f), glm::vec3(0.0f, -1.0f, 0.0f)); //Rotation about y-axis
+	glm::mat4 VRotX = glm::rotate(M, (rotator.phi - time / 100.0f), glm::vec3(0.0f, -1.0f, 0.0f)); //Rotation about y-axis
 	glm::mat4 VRotY = glm::rotate(M, (rotator.theta), glm::vec3(1.0f, 0.0f, 0.0f)); //Rotation about x-axis
 	glm::vec4 camPos = VRotX * VRotY * glm::vec4(0.0f, 30.0f, 220.0f + rotator.zoom, 1.0f);
 	glm::vec3 scene_center(0.0f, 0.0f, 0.0f);

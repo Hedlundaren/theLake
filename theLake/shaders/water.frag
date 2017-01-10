@@ -123,11 +123,12 @@ float turbulence( vec3 p ) {
 float getBumpmap(vec3 pos){
 		float noise = 1.0 * turbulence( .6 * vec3(1.0) + time/100.0 );
 
-	float b = 0.4 * pnoise( 0.05 * pos + vec3( time/3.0 ), vec3( 100.0 ) );
-	float c = 0.5 * pnoise( 0.3 * pos + vec3( time/5.0), vec3( 100.0 ) );
+		float speed = 3.0f;
+	float b = 0.4 * pnoise( 0.05 * pos + vec3(speed* time/3.0 ), vec3( 100.0 ) );
+	float c = 0.5 * pnoise( 0.3 * pos + vec3( speed*time/5.0), vec3( 100.0 ) );
 
-	float d = 0.1 * pnoise( 0.8 * pos+ vec3( time/2.0 ), vec3( 100.0 ) );
-	float e = 0.1 * pnoise( 3.9 * pos+ vec3( time/5.0 ), vec3( 100.0 ) );
+	float d = 0.1 * pnoise( 0.8 * pos+ vec3( speed*time/2.0 ), vec3( 100.0 ) );
+	float e = 0.1 * pnoise( 3.9 * pos+ vec3( speed*time/5.0 ), vec3( 100.0 ) );
 	return - noise + b + c + b*d  + e + max(c*b,0.0);
 }
 

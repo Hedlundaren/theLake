@@ -46,7 +46,7 @@ int main() {
 
 	Surface water(4, 4, 250, 500);
 	Surface mountain(100, 200, 200, 400);
-	Sphere sun(30, 30, 10.0f);
+	Sphere sun(52, 52, 7.0f);
 	Quad quad;
 
 	double time;

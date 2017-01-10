@@ -54,11 +54,11 @@ void Sphere::make_face(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 face_col
 void Sphere::create_sphere() {
 
 
+	glm::vec3 center = glm::vec3(0.0f, -10.0f, 0.0f);
 
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
-	glm::vec3 center = glm::vec3(0.0f, 0.0f, 0.0f);
 	float phi_stepSize = 2.0 * PI / res_phi;
 	float theta_stepSize = 2.0 / res_theta;
 
