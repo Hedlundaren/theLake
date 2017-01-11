@@ -181,29 +181,23 @@ void main()
 	vec3 phong = ambient + diffuse + specular;
 	float height = clamp(0.03*(newPos.y + 2.0), 0.0, 1.0);
 
-	
 	vec2 screen_coord = vec2(gl_FragCoord.x / window_dim.x, gl_FragCoord.y / window_dim.y );
 	
 	// Depth
-	vec3 depth_color = vec3(0.3, 0.5, 0.4);
+	vec3 depth_color = vec3(0.25, 0.4, 0.35);
 	vec3 d1 =  0.001 * vec3(gl_FragCoord.z / gl_FragCoord.w);
-	vec3 d2 = vec3(texture(depthTexture, screen_coord));
-	vec3 depth = 10.0 * depth_color * (d2.x-d1.x);
+	vec3 d2 = vec3(texture(depthTexture, screen_coord  + 0.02f*vec2(normal.x, normal.z)));
+	vec3 depth = 30.0 * depth_color * (d2.x-d1.x);
 
 	// Refraction
-	vec3 refraction_color = vec3(texture(refractionTexture, screen_coord + 0.07f*vec2(normal.x, normal.z) ));
-	vec3 refraction = 0.9f *  ( refraction_color + depth ) * (dot(normal, -V) * 0.4 + 0.6);
+	vec3 refraction_color = vec3(texture(refractionTexture, screen_coord + 0.04f*vec2(normal.x, normal.z) ));
+	vec3 refraction = 0.3 *  ( refraction_color + depth ) * pow(dot(normal, V) * 0.2 + 0.8, 0.02) + 0.7 * refraction_color;
 	
 	// Reflection
 	vec3 reflection_color = 0.6*vec3(texture(reflectionTexture, screen_coord + 0.05f*vec2(normal.x, normal.z) ));
 	vec3 reflection = (pow((1.0f - dot(normal, -V)), 2.9)*0.8 + 0.2) * reflection_color;
 
-	
-
 	vec3 color = phong + refraction + reflection;
-
-	
-	
 
 	outputF = vec4(color, 1.0);
 

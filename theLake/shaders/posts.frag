@@ -29,16 +29,6 @@ float kernel[9] = float[](
     2.0 / 16, 4.0 / 16, 2.0 / 16,
     1.0 / 16, 2.0 / 16, 1.0 / 16  
 );
-//float kernel[9] = float[](
-//        -1, -1, -1,
-//        -1,  9, -1,
-//        -1, -1, -1
-//    );
-  //  float kernel[9] = float[](
-  //      1, 1, 1,
-		//1, -8, 1, 
-		//1, 1, 1
-  //  );
 
     vec3 sampleTex[9];
     for(int i = 0; i < 9; i++)
@@ -52,16 +42,4 @@ float kernel[9] = float[](
     color = vec4(col, 1.0);
 	//color = vec4(vec3(texture(screenTexture, TexCoords)), 1.0);
 
-	//vec4 top         = texture(screenTexture, vec2(TexCoords.x, TexCoords.y + 1.0 / 200.0));
-	//vec4 bottom      = texture(screenTexture, vec2(TexCoords.x, TexCoords.y - 1.0 / 200.0));
-	//vec4 left        = texture(screenTexture, vec2(TexCoords.x - 1.0 / 300.0, TexCoords.y));
-	//vec4 right       = texture(screenTexture, vec2(TexCoords.x + 1.0 / 300.0, TexCoords.y));
-	//vec4 topLeft     = texture(screenTexture, vec2(TexCoords.x - 1.0 / 300.0, TexCoords.y + 1.0 / 200.0));
-	//vec4 topRight    = texture(screenTexture, vec2(TexCoords.x + 1.0 / 300.0, TexCoords.y + 1.0 / 200.0));
-	//vec4 bottomLeft  = texture(screenTexture, vec2(TexCoords.x - 1.0 / 300.0, TexCoords.y - 1.0 / 200.0));
-	//vec4 bottomRight = texture(screenTexture, vec2(TexCoords.x + 1.0 / 300.0, TexCoords.y - 1.0 / 200.0));
-	//vec4 sx = -topLeft - 2 * left - bottomLeft + topRight   + 2 * right  + bottomRight;
-	//vec4 sy = -topLeft - 2 * top  - topRight   + bottomLeft + 2 * bottom + bottomRight;
-	//vec4 sobel = sqrt(sx * sx + sy * sy);
-	//color = sobel;
 }  

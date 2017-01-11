@@ -70,7 +70,7 @@ GLuint ShaderProgram::AttachShader(GLuint shaderType, std::string source) {
 	GLuint sh = compile(shaderType, source.c_str());
 	shader_programs_.push_back(sh);
 
-	std::cout << "Attached shader of type: '" << getShaderType(shaderType) << "'\n";
+	//std::cout << "Attached shader of type: '" << getShaderType(shaderType) << "'\n";
 
 	return sh;
 }
@@ -97,7 +97,7 @@ void ShaderProgram::ConfigureShaderProgram() {
 		exit(EXIT_FAILURE);
 	}
 	else {
-		std::cout << "Shader linking complete!\n";
+		//std::cout << "Shader linking complete!\n";
 	}
 }
 

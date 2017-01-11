@@ -120,11 +120,11 @@ float getBumpmap(vec3 pos){
 		float noise = 1.0 * turbulence( .6 * vec3(1.0) + 100.0 );
 
 	float b = 3.0 * pnoise( 0.05 * pos + vec3( 5.0 ), vec3( 100.0 ) );
-	float c = 7.9 * pnoise( 0.1 * pos + vec3( 5.0), vec3( 100.0 ) );
+	float c = 9.9 * pnoise( 0.1 * pos + vec3( 5.0), vec3( 100.0 ) );
 
 	float d = 0.5 * pnoise( 0.8 * pos+ vec3( 5.0 ), vec3( 100.0 ) );
-	float e = 0.2 * pnoise( 2.9 * pos+ vec3( 5.0 ), vec3( 100.0 ) );
-	return - noise + b + c + b*d  + e + max(c*b,0.0);
+	float e = 0.2 * pnoise( 1.9 * pos+ vec3( 5.0 ), vec3( 100.0 ) );
+	return - noise + b + c + b*sin(e)  + d*b + b*e + max(c*b,0.0);
 }
 
 
@@ -155,7 +155,7 @@ void main()
 
 	// Colors 
 	vec3 ambient_color = vec3(0.0);
-	vec3 diffuse_color = vec3(0.4, 0.4, 0.4);
+	vec3 diffuse_color = 0.6*vec3(0.7, 0.67, 0.65);
 
 	//diffuse_color = vec3(0.9, 0.8, 0.5);
 	//diffuse_color = vec3(0.1, 0.1, 0.1);
@@ -178,7 +178,7 @@ void main()
 		
 	vec3 fog = clear_color * clamp( length(newPos - camPos)/10.0, 0.0, 1.0);
 	vec3 phong = ambient + diffuse;
-	float height = clamp(0.01*(newPos.y + 2.0), 0.0, 1.0);
+	float height = clamp(0.006*(newPos.y + 2.0), 0.0, 1.0);
 
 	vec3 color = phong + height;
 	outputF = vec4(color, 1.0);

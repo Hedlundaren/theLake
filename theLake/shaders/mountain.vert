@@ -125,8 +125,8 @@ float calc_noise(vec3 pos){
 	float b = 10.0 * pnoise( 0.05 * pos + vec3( 5.0 ), vec3( 100.0 ) );
 	float c = 7.9 * pnoise( 0.1 * pos + vec3(5.0), vec3( 100.0 ) );
 
-	float d = 0.5 * pnoise( 0.3 * pos+ vec3( 5.0 ), vec3( 100.0 ) );
-	float e = 0.15 * pnoise( 1.9 * pos+ vec3( 5.0 ), vec3( 100.0 ) );
+	float d = 0.5 * pnoise( 0.2 * pos+ vec3( 5.0 ), vec3( 100.0 ) );
+	float e = 0.15 * pnoise( 0.5 * pos+ vec3( 5.0 ), vec3( 100.0 ) );
 
 	float lift_edges = 0.002*(1.2*pow(pos.x, 2.0) + 0.002*pow(-pos.z, 3.0));
 	return - noise + b + c + b*d  + max(d*e,0.0) + lift_edges - 5.0;
