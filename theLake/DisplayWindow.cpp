@@ -22,7 +22,6 @@ DisplayWindow::DisplayWindow(GLFWwindow* &window, const unsigned width, const un
 		exit(-1);
 	}
 
-	glfwSetWindowPos(window, 800, 170);
 
 	// Define the viewport dimensions
 	glViewport(0, 0, width, height);

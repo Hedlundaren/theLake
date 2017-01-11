@@ -4,11 +4,14 @@
 out vec4 outputF;
 
 in vec3 newPos;
+in vec3 newNormal;
 
 uniform float time;
 uniform vec3 camPos;
 uniform vec3 lDir;
 uniform vec3 clear_color;
+uniform vec2 window_dim;
+uniform sampler2D refractionTexture;
 
 vec3 mod289(vec3 x)
 {
@@ -150,13 +153,19 @@ vec3 calculateNormal(vec3 pos){
 
 void main()
 {
-	vec3 normal = calculateNormal(newPos);
+	vec3 normal = normalize(newNormal + calculateNormal(newPos));
 	vec3 lightDir = normalize(vec3(0, 0.2, 0.5));
+
+	
+	// Refraction
+	vec2 screen_coord = vec2(gl_FragCoord.x / window_dim.x, gl_FragCoord.y / window_dim.y );
+	vec3 refraction_color = vec3(texture(refractionTexture, screen_coord + 0.07f*vec2(normal.x, normal.z) ));
+	vec3 refraction = 0.8f * refraction_color;
 
 	// Colors 
 	vec3 ambient_color = vec3(0.0);
-	vec3 diffuse_color = vec3(0.68, 0.65, 0.2);
-	vec3 specular_color = vec3(0.9, 0.9, 0.9);
+	vec3 diffuse_color = vec3(0.68, 0.23, 0.2);
+	vec3 specular_color = clear_color;
 	ambient_color = diffuse_color;
 
 	// Diffuse
@@ -171,12 +180,12 @@ void main()
 	vec3 eye_pos = normalize(newPos - camPos);
 	vec3 R = 2.0*dot(lightDir,normal)*normal - lightDir;
 	float ks = 0.7;
-	vec3 specular = ks * pow( clamp(dot(R, eye_pos), 0.0, 1.0), 14.9) * specular_color;	
+	vec3 specular = ks * pow( clamp(dot(R, eye_pos), 0.0, 1.0), 34.9) * specular_color;	
 		
 	vec3 fog = clear_color * clamp( length(newPos - camPos)/10.0, 0.0, 1.0);
 	vec3 phong = ambient + diffuse + specular;
 	float height = clamp(0.03*(newPos.y + 2.0), 0.0, 1.0);
 
-	vec3 color = phong + height;
+	vec3 color = phong +1.1*refraction;
 	outputF = vec4(color, 1.0);
 } 

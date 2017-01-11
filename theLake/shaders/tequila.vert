@@ -2,9 +2,10 @@
 #version 430 core
 
 layout (location = 0) in vec3 position;
-layout (location = 1) in vec3 velocity;
+layout (location = 1) in vec3 normal;
 
 out vec3 newPos;
+out vec3 newNormal;
 
 uniform float time;
 uniform mat4 MV;
@@ -136,6 +137,6 @@ void main() {
 	//displacement = pow(position.z, 2.0) + pow(position.x, 2.0);
 	
 	newPos = vec3(position.x, position.y + displacement, position.z);
-
+	newNormal = normal;
     gl_Position = P * MV * vec4(newPos, 1.0f);
 }
