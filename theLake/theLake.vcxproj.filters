@@ -142,5 +142,14 @@
     <None Include="shaders\sun.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="shaders\environment.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="shaders\environment.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="shaders\environmentref.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

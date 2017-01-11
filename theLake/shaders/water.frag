@@ -183,13 +183,13 @@ void main()
 	
 	vec2 screen_coord = vec2(gl_FragCoord.x / window_dim.x, gl_FragCoord.y / window_dim.y );
 	
-	// Reflection
+	// Refraction
 	vec3 refraction_color = vec3(texture(refractionTexture, screen_coord + 0.07f*vec2(normal.x, normal.z) ));
 	vec3 refraction = 0.8f * refraction_color;
 	
-	// Refraction
+	// Reflection
 	vec3 reflection_color = 0.6*vec3(texture(reflectionTexture, screen_coord + 0.05f*vec2(normal.x, normal.z) ));
-	vec3 reflection = pow((1.0f - dot(normal, -V)), 2.9) * reflection_color;
+	vec3 reflection = (pow((1.0f - dot(normal, -V)), 2.9)*0.8 + 0.2) * reflection_color;
 
 
 	vec3 color = phong + refraction + reflection;

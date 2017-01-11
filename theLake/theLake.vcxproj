@@ -166,6 +166,9 @@
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\environment.frag" />
+    <None Include="shaders\environment.vert" />
+    <None Include="shaders\environmentref.frag" />
     <None Include="shaders\mountain.frag" />
     <None Include="shaders\mountain.vert" />
     <None Include="shaders\mountainref.frag" />

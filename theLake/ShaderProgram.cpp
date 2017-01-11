@@ -165,7 +165,7 @@ void ShaderProgram::updateCommonUniforms(MouseRotator rotator, float width, floa
 	glm::vec4 camPos = VRotX * VRotY * glm::vec4(0.0f, 30.0f, 220.0f + rotator.zoom, 1.0f);
 	glm::vec3 scene_center(0.0f, 0.0f, 0.0f);
 	glm::mat4 V = glm::lookAt(glm::vec3(camPos), scene_center, glm::vec3(0.0f, -1.0f, 0.0f));
-	P = glm::perspectiveFov(50.0f, static_cast<float>(width), static_cast<float>(height), 0.1f, 2000.0f);
+	P = glm::perspectiveFov(50.0f, static_cast<float>(width), static_cast<float>(height), 0.1f, 4000.0f);
 	MV = V * M;
 
 	glm::vec3 lDir = glm::vec3(1.0f, 0.0f, 0.0f);
@@ -183,14 +183,16 @@ void ShaderProgram::updateCommonUniforms(MouseRotator rotator, float width, floa
 
 void ShaderProgram::updateMirrorUniforms(MouseRotator rotator, float width, float height, float time, glm::vec3 clear_color) {
 	// Uniforms
-	GLint MV_Loc, P_Loc, lDir_Loc, camPos_Loc, clear_color_Loc, time_Loc = -1;
+	GLint MV_Loc, P_Loc, lDir_Loc, camPos_Loc, clear_color_Loc, time_Loc, window_dim_Loc = -1;
 	time_Loc = glGetUniformLocation(*this, "time");
 	MV_Loc = glGetUniformLocation(*this, "MV");
 	P_Loc = glGetUniformLocation(*this, "P");
 	camPos_Loc = glGetUniformLocation(*this, "camPos");
 	lDir_Loc = glGetUniformLocation(*this, "lDir");
 	clear_color_Loc = glGetUniformLocation(*this, "clear_color");
-
+	window_dim_Loc = glGetUniformLocation(*this, "window_dim");
+	
+	glm::vec2 window_dim = glm::vec2(width, height);
 	glm::mat4 MV, P;
 	glm::mat4 M = glm::mat4(1.0f);
 	glm::mat4 VRotX = glm::rotate(M, (rotator.phi - time / 100.0f), glm::vec3(0.0f, -1.0f, 0.0f)); //Rotation about y-axis
@@ -204,7 +206,7 @@ void ShaderProgram::updateMirrorUniforms(MouseRotator rotator, float width, floa
 		glm::vec4(0.0f, 0.0f, 1.0f, 0.0f), 
 		glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 	
-	P = glm::perspectiveFov(50.0f, static_cast<float>(width), static_cast<float>(height), 0.1f, 2000.0f) * mirror;
+	P = glm::perspectiveFov(50.0f, static_cast<float>(width), static_cast<float>(height), 0.1f, 4000.0f) * mirror;
 	MV = V * M;
 
 	glm::vec3 lDir = glm::vec3(1.0f, 0.0f, 0.0f);
@@ -216,6 +218,7 @@ void ShaderProgram::updateMirrorUniforms(MouseRotator rotator, float width, floa
 	glUniform3fv(camPos_Loc, 1, &camPos[0]);
 	glUniform3fv(lDir_Loc, 1, &lDir[0]);
 	glUniform3fv(clear_color_Loc, 1, &clear_color[0]);
+	glUniform2fv(window_dim_Loc, 1, &window_dim[0]);
 
 
 }
