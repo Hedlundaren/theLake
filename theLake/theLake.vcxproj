@@ -69,31 +69,31 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\headers;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Simon\Documents\Visual Studio 2015\Projects\ParallelParticles\opengl essentials\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\SOIL\src;C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\headers;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\SOIL\projects\VC9\x64\Release;C:\Users\Simon\Documents\Visual Studio 2015\Projects\ParallelParticles\opengl essentials\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\headers;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Simon\Documents\Visual Studio 2015\Projects\ParallelParticles\opengl essentials\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\SOIL\src;C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\headers;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\SOIL\projects\VC9\x64\Release;C:\Users\Simon\Documents\Visual Studio 2015\Projects\ParallelParticles\opengl essentials\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\headers;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Simon\Documents\Visual Studio 2015\Projects\ParallelParticles\opengl essentials\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\SOIL\src;C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\headers;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\SOIL\projects\VC9\x64\Release;C:\Users\Simon\Documents\Visual Studio 2015\Projects\ParallelParticles\opengl essentials\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\headers;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Simon\Documents\Visual Studio 2015\Projects\ParallelParticles\opengl essentials\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\SOIL\src;C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\headers;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\SOIL\projects\VC9\x64\Release;C:\Users\Simon\Documents\Visual Studio 2015\Projects\ParallelParticles\opengl essentials\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\SOIL\src;C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;OpenGL32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;OpenGL32.Lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -101,11 +101,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\SOIL\src;C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;OpenGL32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;OpenGL32.Lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -115,13 +115,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\SOIL\src;C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;OpenGL32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;OpenGL32.Lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,13 +131,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\SOIL\src;C:\Users\Simon\Documents\Visual Studio 2015\Projects\theLake\opengl essentials\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;OpenGL32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;OpenGL32.Lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -148,8 +148,10 @@
     <ClCompile Include="Quad.cpp" />
     <ClCompile Include="Rotator.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Surface.cpp" />
+    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DisplayWindow.h" />
@@ -158,8 +160,10 @@
     <ClInclude Include="Quad.h" />
     <ClInclude Include="Rotator.h" />
     <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Surface.h" />
+    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\mountain.frag" />

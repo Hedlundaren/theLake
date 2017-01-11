@@ -4,24 +4,42 @@
 #include <iostream>
 #include <vector>
 
+#include <stdio.h>
+#include <string>
+#include <cstring>
+
+#ifdef _WIN32
+#include "GL/glew.h"
+#endif
+
 
 class OBJModel
 {
 public:
 	OBJModel();
+	OBJModel(const char *path);
 	~OBJModel();
 
-	bool loadOBJ(
-		const char * path,
-		std::vector < glm::vec3 > & out_vertices,
-		std::vector < glm::vec2 > & out_uvs,
-		std::vector < glm::vec3 > & out_normals
-	);
+	void draw();
+
+protected:
+	bool loadOBJ(const char *path);
 
 private:
 	std::vector< unsigned int > vertexIndices, uvIndices, normalIndices;
-	std::vector< glm::vec3 > temp_vertices;
-	std::vector< glm::vec2 > temp_uvs;
-	std::vector< glm::vec3 > temp_normals;
+
+	// Read our .obj file
+	std::vector < glm::vec3 > vertices;
+	std::vector<unsigned int> indices;
+	std::vector < glm::vec2 > uvs;
+	std::vector < glm::vec3 > normals;
+
+	GLuint vertexbuffer;
+	GLuint uvbuffer;
+
+	GLuint VAO, VBO, IBO, normalbuffer;
+
+
+
 };
 

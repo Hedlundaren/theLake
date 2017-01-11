@@ -12,7 +12,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
-#include <vector>
+
 #include "DisplayWindow.h"
 #include "ShaderProgram.h"
 #include "Rotator.h"
@@ -21,13 +21,22 @@
 #include "Quad.h";
 #include "Sphere.h";
 #include "Framebuffer.h";
+#include "Texture.h";
+#include "OBJModel.h";
+#include "Sound.h";
+
+
 
 #define HEIGHT 900
 #define WIDTH 900
 
 using namespace std;
 
+
+
 int main() {
+
+	
 
 	cout << "Welcome.\n";
 	GLFWwindow* window = nullptr;
@@ -49,12 +58,18 @@ int main() {
 	Sphere sun(52, 52, 7.0f);
 	Quad quad;
 
+	Texture texture("textures/benjaminsvatten.png");
+
 	double time;
 
 	Framebuffer framebuffer[6] = { { WIDTH, HEIGHT },{ WIDTH, HEIGHT },{ WIDTH, HEIGHT },{ WIDTH, HEIGHT },{ WIDTH, HEIGHT },{ WIDTH, HEIGHT } };
 	Framebuffer refractionBuffer(WIDTH, HEIGHT);
 	Framebuffer reflectionBuffer(WIDTH, HEIGHT);
 	Framebuffer preScreenBuffer(WIDTH, HEIGHT);
+
+	Sound test("sounds/hatkarlek.mp3");
+	test.setVolume(0);
+	test.play();
 
 	do {
 		// Setup frame
@@ -75,10 +90,6 @@ int main() {
 		mountain_program();
 		mountain_program.updateCommonUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
 		mountain.draw(window);
-
-		//sun_program();
-		//sun_program.updateCommonUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
-		//sun.draw();
 
 		// =========================
 		// Reflection render pass 
@@ -101,8 +112,6 @@ int main() {
 		if (glfwGetKey(window, GLFW_KEY_W)) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); else glPolygonMode(GL_FRONT_AND_BACK, GL_TRIANGLES);
 
 		preScreenBuffer.bindBuffer();
-		//glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // We're not using stencil buffer now
 		glEnable(GL_DEPTH_TEST);
@@ -114,7 +123,6 @@ int main() {
 		// Sun render pass 
 		// =========================
 		preScreenBuffer.bindBuffer();
-		//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		sun_program();
 		sun_program.updateCommonUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
@@ -124,7 +132,6 @@ int main() {
 		// Water render pass 
 		// =========================
 		preScreenBuffer.bindBuffer();
-		//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		if (glfwGetKey(window, GLFW_KEY_T)) {
 			tequila_program();
