@@ -135,7 +135,7 @@ void main() {
 	float displacement = calc_noise(position);
 	//displacement = pow(position.z, 2.0) + pow(position.x, 2.0);
 	
-	newPos = vec3(position.x, position.y, position.z);
+	newPos = vec3(position.x, position.y , position.z);
 
-    gl_Position = P * MV * vec4(position, 1.0f);
+    gl_Position = P * MV * vec4(newPos, 1.0f);
 }

@@ -34,6 +34,7 @@ int main() {
 	DisplayWindow myWindow = DisplayWindow(window, WIDTH, HEIGHT);
 
 	ShaderProgram post_program("shaders/posts.vert", "", "", "", "shaders/posts.frag");
+	ShaderProgram depth_program("shaders/mountain.vert", "", "", "", "shaders/depth.frag");
 	ShaderProgram mountain_program("shaders/mountain.vert", "", "", "", "shaders/mountain.frag");
 	ShaderProgram mountain_mirror_program("shaders/mountainref.vert", "", "", "", "shaders/mountainref.frag");
 	ShaderProgram water_program("shaders/water.vert", "", "", "", "shaders/water.frag");
@@ -59,12 +60,13 @@ int main() {
 	double time;
 
 	Framebuffer framebuffer[6] = { { WIDTH, HEIGHT },{ WIDTH, HEIGHT },{ WIDTH, HEIGHT },{ WIDTH, HEIGHT },{ WIDTH, HEIGHT },{ WIDTH, HEIGHT } };
+	Framebuffer depthBuffer(WIDTH, HEIGHT);
 	Framebuffer refractionBuffer(WIDTH, HEIGHT);
 	Framebuffer reflectionBuffer(WIDTH, HEIGHT);
 	Framebuffer preScreenBuffer(WIDTH, HEIGHT);
 
 	Sound test("sounds/whatsthis.mp3");
-	test.setVolume(50);
+	test.setVolume(1);
 	test.play();
 
 	do {
@@ -111,6 +113,18 @@ int main() {
 		environmentref_program();
 		environmentref_program.updateMirrorUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
 		sphereMap.draw();
+
+
+		// =========================
+		// Depth render pass 
+		// =========================
+		depthBuffer.bindBuffer();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // We're not using stencil buffer now
+		glEnable(GL_DEPTH_TEST);
+
+		depth_program();
+		depth_program.updateCommonUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
+		mountain.draw(window);
 		
 		// =========================
 		// Environment render pass 
@@ -162,15 +176,17 @@ int main() {
 		
 		texLoc = glGetUniformLocation(water_program, "reflectionTexture");
 		glUniform1i(texLoc, 0);
-
 		texLoc = glGetUniformLocation(water_program, "refractionTexture");
 		glUniform1i(texLoc, 1);
+		texLoc = glGetUniformLocation(water_program, "depthTexture");
+		glUniform1i(texLoc, 2);
 
 		glActiveTexture(GL_TEXTURE0);
 		reflectionBuffer.bindTexture();
-
 		glActiveTexture(GL_TEXTURE1);
 		refractionBuffer.bindTexture();
+		glActiveTexture(GL_TEXTURE2);
+		depthBuffer.bindTexture();
 
 		water.draw(window);
 

@@ -151,5 +151,11 @@
     <None Include="shaders\environmentref.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="shaders\depth.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="shaders\depth.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
