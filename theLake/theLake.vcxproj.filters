@@ -94,12 +94,6 @@
     <None Include="shaders\mountain.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="shaders\mountainref.frag">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="shaders\mountainref.vert">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
     <None Include="shaders\posts.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
@@ -161,6 +155,18 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="shaders\cloud.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="shaders\mountainreflection.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="shaders\mountainreflection.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="shaders\mountainrefraction.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="shaders\mountainrefraction.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>

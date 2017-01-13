@@ -55,6 +55,7 @@ void Surface::create_plane() {
 	for (float z = 0; z < res_z; z+=1.0f) {
 		for (float x = 0; x < res_x; x += 1.0f) {
 			vertices.push_back(glm::vec3(x*leap_x - offset_x, height, z*leap_z - offset_z));
+			uvs.push_back(glm::vec2(x/res_x, z/res_z));
 		}
 	}
 
@@ -70,12 +71,13 @@ void Surface::create_plane() {
 			indices.push_back((i + 1) + j*res_x);
 			indices.push_back((i + 1) + (j + 1)*res_x);
 			indices.push_back((i)+(j + 1)*res_x);
+
 		}
 	}
 
 	// Model vertices
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float) * 3, &vertices[0], GL_STATIC_DRAW); // Give our vertices to OpenGL.
 	glEnableVertexAttribArray(0); // 1rst attribute buffer : vertices
 	glVertexAttribPointer(
@@ -84,6 +86,20 @@ void Surface::create_plane() {
 		GL_FLOAT,           // type
 		GL_FALSE,           // normalized?
 		sizeof(float) * 3,  // stride
+		(void*)0			// array buffer offset
+	);
+
+	// Model uv coords
+	glGenBuffers(1, &UVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, UVBO);
+	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(float) * 2, &uvs[0], GL_STATIC_DRAW); // Give our uvs to OpenGL.
+	glEnableVertexAttribArray(1); // 2rst attribute buffer : uvs
+	glVertexAttribPointer(
+		1,                  // attribute 1. No particular reason for 0, but must match the layout in the shader.
+		2,                  // size
+		GL_FLOAT,           // type
+		GL_FALSE,           // normalized?
+		sizeof(float) * 2,  // stride
 		(void*)0			// array buffer offset
 	);
 

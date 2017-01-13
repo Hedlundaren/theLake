@@ -130,7 +130,7 @@ float getBumpmap(vec3 pos){
 
 	float d = 0.1 * pnoise( 0.8 * pos+ vec3( speed*time/2.0 ), vec3( 100.0 ) );
 	float e = 0.1 * pnoise( 3.9 * pos+ vec3( speed*time/5.0 ), vec3( 100.0 ) );
-	return - noise + b + c + b*d  + e + max(c*b,0.0);
+	return - 0.4*(noise + b + c + b*d  + e + max(c*b,0.0));
 }
 
 vec3 calculateNormal(vec3 pos){
@@ -187,15 +187,15 @@ void main()
 	vec3 depth_color = vec3(0.25, 0.4, 0.35);
 	vec3 d1 =  0.001 * vec3(gl_FragCoord.z / gl_FragCoord.w);
 	vec3 d2 = vec3(texture(depthTexture, screen_coord  + 0.02f*vec2(normal.x, normal.z)));
-	vec3 depth = 30.0 * depth_color * (d2.x-d1.x);
+	vec3 depth = depth_color * clamp(10.0 * (d2.x-d1.x), 0.0, 0.8);
 
 	// Refraction
 	vec3 refraction_color = vec3(texture(refractionTexture, screen_coord + 0.04f*vec2(normal.x, normal.z) ));
-	vec3 refraction = 0.3 *  ( refraction_color + depth ) * pow(dot(normal, V) * 0.2 + 0.8, 0.02) + 0.7 * refraction_color;
+	vec3 refraction = 0.3 *  ( refraction_color + 1.2*depth ) * pow(dot(normal, V) * 0.2 + 0.8, 0.02) + 0.2 * refraction_color;
 	
 	// Reflection
 	vec3 reflection_color = 0.6*vec3(texture(reflectionTexture, screen_coord + 0.05f*vec2(normal.x, normal.z) ));
-	vec3 reflection = (pow((1.0f - dot(normal, -V)), 2.9)*0.8 + 0.2) * reflection_color;
+	vec3 reflection = (pow((1.0f - dot(normal, -V)), 2.9)*0.9 + 0.1) * reflection_color;
 
 	vec3 color = phong + refraction + reflection;
 

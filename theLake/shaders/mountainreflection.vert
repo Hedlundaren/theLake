@@ -2,9 +2,10 @@
 #version 430 core
 
 layout (location = 0) in vec3 position;
-layout (location = 1) in vec3 velocity;
+layout (location = 1) in vec2 uv;
 
 out vec3 newPos;
+out vec2 texCoord;
 
 uniform float time;
 uniform mat4 MV;
@@ -136,7 +137,9 @@ void main() {
 	float displacement = calc_noise(position);
 	//displacement = pow(position.z, 2.0) + pow(position.x, 2.0);
 	
-	newPos = vec3(position.x, -(position.y + displacement), position.z);
+	newPos = vec3(position.x, -(position.y + displacement - 5.0f), position.z);
+	texCoord = uv;
+
 	if(newPos.y > 0.5f){
 		gl_Position = P * MV * vec4(vec3(newPos.x, 0.0f, newPos.z), 1.0f);
 	

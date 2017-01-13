@@ -164,7 +164,7 @@ void main()
 
 	// Colors 
 	vec3 ambient_color = vec3(0.0);
-	vec3 diffuse_color = vec3(0.2, 0.3, 0.5);
+	vec3 diffuse_color = vec3(0.3, 0.1, 0.1);
 	vec3 specular_color = refraction;
 	ambient_color = diffuse_color;
 
@@ -173,7 +173,7 @@ void main()
     vec3 diffuse = 1.0 * a * diffuse_color;
 
 	// Ambient
-	float b = 0.3;
+	float b = 0.7;
 	vec3 ambient = ambient_color * b;
 
 	// Specular
@@ -186,6 +186,6 @@ void main()
 	vec3 phong = ambient + diffuse + specular;
 	float height = clamp(0.03*(newPos.y + 2.0), 0.0, 1.0);
 
-	vec3 color = phong +1.1*refraction;
-	outputF = vec4(color, 2*specular.x + diffuse.y);
+	vec3 color = phong + 0.6*refraction;
+	outputF = vec4(color, 1.0);
 } 

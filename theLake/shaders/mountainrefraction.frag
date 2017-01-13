@@ -1,16 +1,18 @@
-//#version 400 compatibility
-#version 430 core
+#version 430
 
-layout (location = 0) in vec3 position;
-layout (location = 1) in vec3 velocity;
 
-out vec3 newPos;
+out vec4 outputF;
+
+in vec3 newPos;
+in vec2 texCoord;
 
 uniform float time;
-uniform mat4 MV;
-uniform mat4 P;
+uniform vec3 camPos;
+uniform vec3 lDir;
+uniform vec3 clear_color;
+uniform vec2 window_dim;
 
-
+uniform sampler2D causticsTexture;
 
 vec3 mod289(vec3 x)
 {
@@ -118,26 +120,78 @@ float turbulence( vec3 p ) {
 	return t;
 }
 
-float calc_noise(vec3 pos){
-
+float getBumpmap(vec3 pos){
 		float noise = 1.0 * turbulence( .6 * vec3(1.0) + 100.0 );
 
-	float b = 10.0 * pnoise( 0.05 * pos + vec3( 5.0 ), vec3( 100.0 ) );
-	float c = 7.9 * pnoise( 0.1 * pos + vec3(5.0), vec3( 100.0 ) );
+	float b = 3.0 * pnoise( 0.05 * pos + vec3( 5.0 ), vec3( 100.0 ) );
+	float c = 9.9 * pnoise( 0.1 * pos + vec3( 5.0), vec3( 100.0 ) );
 
-	float d = 0.5 * pnoise( 0.2 * pos+ vec3( 5.0 ), vec3( 100.0 ) );
-	float e = 0.15 * pnoise( 0.5 * pos+ vec3( 5.0 ), vec3( 100.0 ) );
-
-	float lift_edges = 0.002*(1.2*pow(pos.x, 2.0) + 0.002*pow(-pos.z, 3.0));
-	return - noise + b + c + b*d  + max(d*e,0.0) + lift_edges - 5.0;
+	float d = 0.5 * pnoise( 0.8 * pos+ vec3( 5.0 ), vec3( 100.0 ) );
+	float e = 0.2 * pnoise( 1.9 * pos+ vec3( 5.0 ), vec3( 100.0 ) );
+	return - noise + b + c + b*sin(e)  + d*b + b*e + max(c*b,0.0);
 }
 
 
-void main() {
-	float displacement = calc_noise(position);
-	//displacement = pow(position.z, 2.0) + pow(position.x, 2.0);
-	
-	newPos = vec3(position.x, position.y + displacement - 5.0, position.z);
+vec3 calculateNormal(vec3 pos){
 
-    gl_Position = P * MV * vec4(newPos, 1.0f);
+	float dx = 0.5;
+
+	vec3 A = vec3( 0.0, getBumpmap(vec3(pos.x, pos.y, pos.z)), 0.0);
+	vec3 B = vec3( dx, getBumpmap(vec3(pos.x + dx , pos.y, pos.z)), 0.0);
+	vec3 x = B - A;
+
+
+	vec3 C = vec3( 0.0, getBumpmap(vec3(pos.x, pos.y, pos.z + dx)), dx);
+	vec3 z = B - C;
+
+	vec3 n = cross(x, z);
+
+
+	return n;
 }
+
+
+void main()
+{
+
+	vec3 normal = calculateNormal(newPos);
+	vec3 lightDir = normalize(vec3(0.5, 0.7, 0.0));
+
+	// Colors 
+	vec3 ambient_color = vec3(0.0);
+	vec3 diffuse_color = 0.6*vec3(0.7, 0.67, 0.65);
+
+	//diffuse_color = vec3(0.9, 0.8, 0.5);
+	//diffuse_color = vec3(0.1, 0.1, 0.1);
+
+	vec3 specular_color = vec3(0.9, 0.9, 0.9);
+	ambient_color = diffuse_color;
+	// Diffuse
+	float a = clamp( dot( normal, lightDir ), 0.0, 1.0);
+    vec3 diffuse = 1.0 * a * diffuse_color;
+
+	// Ambient
+	float ka = 0.3;
+	vec3 ambient = ambient_color * ka;
+
+	// Specular
+	vec3 eye_pos = normalize(newPos - camPos);
+	vec3 R = 2.0*dot(lightDir,normal)*normal - lightDir;
+	float ks = 0.7;
+	vec3 specular = ks * pow( clamp(dot(R, eye_pos), 0.0, 1.0), 14.9) * specular_color;	
+		
+	vec3 fog = clear_color * clamp( length(newPos - camPos)/10.0, 0.0, 1.0);
+	vec3 phong = ambient + diffuse;
+	float height = clamp(0.006*(newPos.y + 2.0), 0.0, 1.0);
+
+	// Caustics
+	vec2 screen_coord = vec2(gl_FragCoord.x / window_dim.x, gl_FragCoord.y / window_dim.y );
+	vec3 caustic_color = vec3(0.8, 0.8, 0.6);
+	float disp_x = 0.000001*(sin(3*time + newPos.x));
+	float disp_y = 0.000001*(sin(2*time + + newPos.z*0.6));
+	vec3 kc = 0.5*vec3(texture(causticsTexture, 12000*vec2(texCoord.x / window_dim.x + disp_x, texCoord.y / window_dim.y + disp_y) + 0.06*vec2(normal.x, normal.z))) * (0.2*sin(newPos.y) + 0.5);
+	vec3 caustics = kc.x * caustic_color;
+
+	vec3 color = phong + height + caustics;
+	outputF = vec4(color, 1.0);
+} 

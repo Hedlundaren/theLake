@@ -175,8 +175,10 @@
     <None Include="shaders\environmentref.frag" />
     <None Include="shaders\mountain.frag" />
     <None Include="shaders\mountain.vert" />
-    <None Include="shaders\mountainref.frag" />
-    <None Include="shaders\mountainref.vert" />
+    <None Include="shaders\mountainreflection.frag" />
+    <None Include="shaders\mountainreflection.vert" />
+    <None Include="shaders\mountainrefraction.frag" />
+    <None Include="shaders\mountainrefraction.vert" />
     <None Include="shaders\posts.frag" />
     <None Include="shaders\posts.vert" />
     <None Include="shaders\shader.frag" />
