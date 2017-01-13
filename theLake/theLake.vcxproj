@@ -166,8 +166,6 @@
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\cloud.frag" />
-    <None Include="shaders\cloud.vert" />
     <None Include="shaders\depth.frag" />
     <None Include="shaders\depth.vert" />
     <None Include="shaders\environment.frag" />

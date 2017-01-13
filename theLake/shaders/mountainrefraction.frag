@@ -158,14 +158,10 @@ void main()
 	vec3 lightDir = normalize(vec3(0.5, 0.7, 0.0));
 
 	// Colors 
-	vec3 ambient_color = vec3(0.0);
 	vec3 diffuse_color = 0.6*vec3(0.7, 0.67, 0.65);
-
-	//diffuse_color = vec3(0.9, 0.8, 0.5);
-	//diffuse_color = vec3(0.1, 0.1, 0.1);
-
 	vec3 specular_color = vec3(0.9, 0.9, 0.9);
-	ambient_color = diffuse_color;
+	vec3 ambient_color = diffuse_color;
+
 	// Diffuse
 	float a = clamp( dot( normal, lightDir ), 0.0, 1.0);
     vec3 diffuse = 1.0 * a * diffuse_color;
@@ -180,7 +176,6 @@ void main()
 	float ks = 0.7;
 	vec3 specular = ks * pow( clamp(dot(R, eye_pos), 0.0, 1.0), 14.9) * specular_color;	
 		
-	vec3 fog = clear_color * clamp( length(newPos - camPos)/10.0, 0.0, 1.0);
 	vec3 phong = ambient + diffuse;
 	float height = clamp(0.006*(newPos.y + 2.0), 0.0, 1.0);
 

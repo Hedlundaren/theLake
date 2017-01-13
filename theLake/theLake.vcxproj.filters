@@ -151,12 +151,6 @@
     <None Include="shaders\depth.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="shaders\cloud.frag">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="shaders\cloud.vert">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
     <None Include="shaders\mountainreflection.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>

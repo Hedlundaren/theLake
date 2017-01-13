@@ -2,11 +2,12 @@
  
 out vec4 outputF;
 
-in vec4 pos;
+in vec3 newPos;
 in vec4 n;
 uniform float time;
 
 uniform vec3 lDir;
+uniform vec3 camPos;
 
 void main()
 {

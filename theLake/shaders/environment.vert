@@ -1,11 +1,12 @@
 #version 430
  
-in vec4 position;
-in vec4 normal;
- 
-out vec4 color;
-out vec4 pos;
-out vec4 n;
+layout (location = 0) in vec3 position;
+layout (location = 1) in vec3 normal;
+layout (location = 2) in vec2 uv;
+
+out vec3 newPos;
+out vec3 newNormal;
+out vec2 texCoord;
 
 uniform float time;
 
@@ -14,8 +15,10 @@ uniform mat4 P;
 
 void main()
 {
-	pos = position;
-	n = ( normal );
 
-    gl_Position = P * MV * position;
+	newPos = position;
+	newNormal = normal;
+	texCoord= uv;
+
+    gl_Position = P * MV * vec4(position, 1.0);
 } 

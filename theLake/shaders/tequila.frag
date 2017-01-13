@@ -5,6 +5,7 @@ out vec4 outputF;
 
 in vec3 newPos;
 in vec3 newNormal;
+in vec2 texCoord;
 
 uniform float time;
 uniform vec3 camPos;
@@ -12,6 +13,7 @@ uniform vec3 lDir;
 uniform vec3 clear_color;
 uniform vec2 window_dim;
 uniform sampler2D refractionTexture;
+uniform sampler2D earthTexture;
 
 vec3 mod289(vec3 x)
 {
@@ -159,7 +161,7 @@ void main()
 	
 	// Refraction
 	vec2 screen_coord = vec2(gl_FragCoord.x / window_dim.x, gl_FragCoord.y / window_dim.y );
-	vec3 refraction_color = vec3(texture(refractionTexture, screen_coord + 0.07f*vec2(normal.x, normal.z) ));
+	vec3 refraction_color = vec3(texture(earthTexture, screen_coord + 0.07f*vec2(normal.x, normal.z) ));
 	vec3 refraction = 0.8f * refraction_color;
 
 	// Colors 
@@ -186,6 +188,9 @@ void main()
 	vec3 phong = ambient + diffuse + specular;
 	float height = clamp(0.03*(newPos.y + 2.0), 0.0, 1.0);
 
+	vec3 earth = vec3(texture(earthTexture, texCoord));
+
+
 	vec3 color = phong + 0.6*refraction;
-	outputF = vec4(color, 1.0);
+	outputF = vec4(earth, 1.0);
 } 

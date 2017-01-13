@@ -39,8 +39,6 @@ int main() {
 
 	ShaderProgram post_program("shaders/posts.vert", "", "", "", "shaders/posts.frag");
 	ShaderProgram depth_program("shaders/depth.vert", "", "", "", "shaders/depth.frag");
-	ShaderProgram cloud_pre_program("shaders/cloud.vert", "", "", "", "shaders/depth.frag");
-	ShaderProgram cloud_program("shaders/cloud.vert", "", "", "", "shaders/cloud.frag");
 	ShaderProgram mountain_depth_program("shaders/mountain.vert", "", "", "", "shaders/depth.frag");
 	ShaderProgram mountain_program("shaders/mountain.vert", "", "", "", "shaders/mountain.frag");
 	ShaderProgram mountain_refraction_program("shaders/mountainrefraction.vert", "", "", "", "shaders/mountainrefraction.frag");
@@ -59,13 +57,13 @@ int main() {
 	Surface water(4, 4, 250, 600);
 	Surface mountain(100, 200, 200, 400);
 	Sphere sun(52, 52, 7.0f);
-	Sphere cloud(20, 20, 12.0f);
 	Sphere sphereMap(20, 20, 1800.0f);
 	Quad quad;
 
 	Texture texture("textures/albin.png");
-	Texture sky_texture("textures/sky.jpg");
+	Texture sky_texture("textures/evesphere.jpg");
 	Texture caustics_texture("textures/caustics.png");
+	Texture earth_texture("textures/earth.jpg");
 
 	double time;
 
@@ -126,15 +124,13 @@ int main() {
 
 		glActiveTexture(GL_TEXTURE0);
 		sky_texture.bindTexture();
-		environmentref_program();
-		environmentref_program.updateMirrorUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
+		environment_program();
+		environment_program.updateMirrorUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
 		sphereMap.draw();
 
 		sun_program();
 		sun_program.updateMirrorUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
 		sun.draw();
-
-		
 
 
 		// =========================
@@ -207,47 +203,19 @@ int main() {
 		// =========================
 		// Sun render pass 
 		// =========================
-		glActiveTexture(GL_TEXTURE0);
-		texture.bindTexture();
 		sun_program();
 		sun_program.updateCommonUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
-		sun.draw();
 
-		// =========================
-		// Cloud Pre render pass 
-		// =========================
-
-		cloudBuffer.bindBuffer();
-
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // We're not using stencil buffer now
-		glEnable(GL_DEPTH_TEST);
-
-		cloud_pre_program();
-		cloud_pre_program.updateCommonUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
-		
-		glEnable(GL_CULL_FACE);
-		glFrontFace(GL_CW);
-		glPolygonMode(GL_FRONT, GL_FILL);
-		glCullFace(GL_FRONT);
-		cloud.draw();
-
-
-
-		// =========================
-		// Cloud Post render pass 
-		// =========================
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-		texLoc = glGetUniformLocation(cloud_program, "cloudTexture");
+		texLoc = glGetUniformLocation(sun_program, "refractionTexture");
 		glUniform1i(texLoc, 0);
-		glActiveTexture(GL_TEXTURE0);
-		cloudBuffer.bindTexture();
+		texLoc = glGetUniformLocation(sun_program, "earthTexture");
+		glUniform1i(texLoc, 1);
 
-		cloud_program();
-		cloud_program.updateCommonUniforms(rotator, WIDTH, HEIGHT, time, clear_color);
-		
-		glCullFace(GL_BACK);
-		//cloud.draw();
+		glActiveTexture(GL_TEXTURE0);
+		texture.bindTexture();
+		glActiveTexture(GL_TEXTURE1);
+		earth_texture.bindTexture();
+		sun.draw();
 
 		// =========================
 		// Post render pass 

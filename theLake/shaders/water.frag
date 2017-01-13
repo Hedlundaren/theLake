@@ -195,7 +195,7 @@ void main()
 	
 	// Reflection
 	vec3 reflection_color = 0.6*vec3(texture(reflectionTexture, screen_coord + 0.05f*vec2(normal.x, normal.z) ));
-	vec3 reflection = (pow((1.0f - dot(normal, -V)), 2.9)*0.9 + 0.1) * reflection_color;
+	vec3 reflection = (pow((1.0f - dot(normal, -V)), 2.9)*0.7 + 0.3) * reflection_color;
 
 	vec3 color = phong + refraction + reflection;
 
