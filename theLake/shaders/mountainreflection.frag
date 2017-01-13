@@ -155,7 +155,7 @@ void main()
 
 	// Colors 
 	vec3 ambient_color = vec3(0.0);
-	vec3 diffuse_color = vec3(0.5, 0.5, 0.5);
+	vec3 diffuse_color = 0.6*vec3(0.8, 0.77, 0.65);
 	vec3 specular_color = vec3(0.9, 0.9, 0.9);
 	ambient_color = diffuse_color;
 	// Diffuse

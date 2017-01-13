@@ -25,7 +25,6 @@ DisplayWindow::DisplayWindow(GLFWwindow* &window, const unsigned width, const un
 	glfwSetWindowPos(window, 900, 270);
 
 	// Define the viewport dimensions
-	glViewport(0, 0, width, height);
 
 	glfwMakeContextCurrent(window); // Initialize GLEW
 	glewExperimental = true; // Needed in core profile
@@ -59,4 +58,7 @@ void DisplayWindow::initFrame(glm::vec3 clear_color) {
 	glAlphaFunc(GL_GREATER, 0.0);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_CULL_FACE);
+
+	glEnable(GL_TEXTURE_2D);
+
 }

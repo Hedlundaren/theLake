@@ -2,12 +2,12 @@
 
 
 
-Framebuffer::Framebuffer() : height(100), width(100)
+Framebuffer::Framebuffer() : width(2000), height(1000)
 {
 	create_framebuffer();
 }
 
-Framebuffer::Framebuffer(const int w, const int h) : height(w), width(h)
+Framebuffer::Framebuffer(const int w, const int h) : width(w), height(h)
 {
 	create_framebuffer();
 }

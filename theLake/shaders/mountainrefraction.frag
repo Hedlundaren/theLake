@@ -13,6 +13,7 @@ uniform vec3 clear_color;
 uniform vec2 window_dim;
 
 uniform sampler2D causticsTexture;
+uniform sampler2D skyTexture;
 
 vec3 mod289(vec3 x)
 {
@@ -158,7 +159,7 @@ void main()
 	vec3 lightDir = normalize(vec3(0.5, 0.7, 0.0));
 
 	// Colors 
-	vec3 diffuse_color = 0.6*vec3(0.7, 0.67, 0.65);
+	vec3 diffuse_color = 0.6*vec3(0.8, 0.77, 0.65);
 	vec3 specular_color = vec3(0.9, 0.9, 0.9);
 	vec3 ambient_color = diffuse_color;
 
@@ -184,8 +185,11 @@ void main()
 	vec3 caustic_color = vec3(0.8, 0.8, 0.6);
 	float disp_x = 0.000001*(sin(3*time + newPos.x));
 	float disp_y = 0.000001*(sin(2*time + + newPos.z*0.6));
-	vec3 kc = 0.5*vec3(texture(causticsTexture, 12000*vec2(texCoord.x / window_dim.x + disp_x, texCoord.y / window_dim.y + disp_y) + 0.06*vec2(normal.x, normal.z))) * (0.2*sin(newPos.y) + 0.5);
-	vec3 caustics = kc.x * caustic_color;
+	vec3 tex_color = vec3(texture(skyTexture, texCoord));
+	vec3 kc = 0.8*vec3(texture(causticsTexture, 12000*vec2(texCoord.x / window_dim.x + disp_x, texCoord.y / window_dim.y + disp_y) + 0.06*vec2(normal.x, normal.z))) * (0.2*sin(newPos.y) + 0.5);
+	
+	//vec3 caustics = kc.x * caustic_color;
+	vec3 caustics = kc.x * tex_color;
 
 	vec3 color = phong + height + caustics;
 	outputF = vec4(color, 1.0);

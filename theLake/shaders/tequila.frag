@@ -192,5 +192,5 @@ void main()
 
 
 	vec3 color = phong + 0.6*refraction;
-	outputF = vec4(earth, 1.0);
+	outputF = vec4(color, 1.0);
 } 

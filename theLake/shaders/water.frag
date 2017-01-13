@@ -10,6 +10,7 @@ uniform vec3 camPos;
 uniform vec3 lDir;
 uniform vec3 clear_color;
 uniform vec2 window_dim;
+uniform float render_mode;
 
 uniform sampler2D reflectionTexture;
 uniform sampler2D refractionTexture;
@@ -155,7 +156,6 @@ void main()
 	vec3 normal = normalize(calculateNormal(newPos));
 	vec3 lightDir = normalize(vec3(0.0, 0.2, 0.5));
 
-
 	// Colors 
 	vec3 ambient_color = vec3(0.0);
 	vec3 diffuse_color = vec3(0.2, 0.65, 0.8);
@@ -181,7 +181,8 @@ void main()
 	vec3 phong = ambient + diffuse + specular;
 	float height = clamp(0.03*(newPos.y + 2.0), 0.0, 1.0);
 
-	vec2 screen_coord = vec2(gl_FragCoord.x / window_dim.x, gl_FragCoord.y / window_dim.y );
+	vec2 screen_coord = vec2((gl_FragCoord.x )/ window_dim.x, (gl_FragCoord.y )/ window_dim.y) ;
+	// screen_coord = vec2((gl_FragCoord.x )/ window_dim.x / 0.5, (gl_FragCoord.y )/ window_dim.y / 2) ;
 	
 	// Depth
 	vec3 depth_color = vec3(0.25, 0.4, 0.35);
@@ -194,10 +195,25 @@ void main()
 	vec3 refraction = 0.3 *  ( refraction_color + 1.2*depth ) * pow(dot(normal, V) * 0.2 + 0.8, 0.02) + 0.2 * refraction_color;
 	
 	// Reflection
-	vec3 reflection_color = 0.6*vec3(texture(reflectionTexture, screen_coord + 0.05f*vec2(normal.x, normal.z) ));
+	vec3 reflection_color = 0.5*vec3(texture(reflectionTexture, screen_coord + 0.05f*vec2(normal.x, normal.z) ));
 	vec3 reflection = (pow((1.0f - dot(normal, -V)), 2.9)*0.7 + 0.3) * reflection_color;
+	
+	vec3 color = vec3(0.0f);
 
-	vec3 color = phong + refraction + reflection;
+	if(render_mode == 0.0f) 
+		color = phong + refraction + reflection;
+	else if(render_mode == 1.0f) 
+		color = reflection;
+	else if(render_mode == 2.0f) 
+		color = refraction_color;
+	else if(render_mode == 3.0f) 
+		color = d2;
+	else if(render_mode == 4.0f) 
+		color = d1;
+	else if(render_mode == 5.0f) 
+		color = 10.0f*(d2-d1);
+	else if(render_mode == 6.0f) 
+		color = vec3(0.5);
 
 	outputF = vec4(color, 1.0);
 

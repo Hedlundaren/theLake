@@ -163,5 +163,11 @@
     <None Include="shaders\mountainrefraction.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="shaders\earth.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="shaders\earth.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -82,8 +82,8 @@ void Sphere::create_sphere() {
 		make_face(top, b, a, RED, center, phi_stepSize * j, theta_stepSize);
 
 		uvs.push_back(glm::vec2(	phi_stepSize * j / (2 * PI),						0.0f)); // top
-		uvs.push_back(glm::vec2(	(phi_stepSize * j) / (2 * PI),						theta_stepSize / (2 * PI))); // a
-		uvs.push_back(glm::vec2(	(phi_stepSize * j + phi_stepSize )/ (2 * PI),		theta_stepSize / (2 * PI))); // b 
+		uvs.push_back(glm::vec2((phi_stepSize * j + phi_stepSize) / (2 * PI), theta_stepSize / PI)); // b 
+		uvs.push_back(glm::vec2(	(phi_stepSize * j) / (2 * PI),						theta_stepSize / PI)); // a
 	}
 
 	// Middle piece
@@ -145,8 +145,8 @@ void Sphere::create_sphere() {
 		make_face(bottom, a, b, RED, center, phi_stepSize * j , 1.0f - theta_stepSize );
 
 		uvs.push_back(glm::vec2(phi_stepSize * j / (2 * PI), ( 1.0f - theta_stepSize) / (2 * PI)));
-		uvs.push_back(glm::vec2((phi_stepSize * j + phi_stepSize) / (2 * PI), (1.0f - theta_stepSize) / (2 * PI)));
-		uvs.push_back(glm::vec2(phi_stepSize * j / (2 * PI), (1.0f - theta_stepSize) / (2 * PI)));
+		uvs.push_back(glm::vec2((phi_stepSize * j + phi_stepSize) / (2 * PI), (1.0f - theta_stepSize / PI)));
+		uvs.push_back(glm::vec2(phi_stepSize * j / (2 * PI), (1.0f - theta_stepSize/PI) ));
 
 	}
 
