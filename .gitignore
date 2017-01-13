@@ -1,6 +1,7 @@
 !/.gitignore
 Debug/
 opengl essentials/
+theLake/textures/
 x64/
 theLake.sln
 theLake.VC.db
